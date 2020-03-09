@@ -34,11 +34,12 @@ void *reader(void *fd_ptr) {
 	while (1) {
 		char readbuf[SIZE + 1];
   		pread(*fd, readbuf, SIZE, 0);
-
+/*
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {
 			fprintf(stderr, "%s\n", readbuf);
 			exit(0);
 		}		
+*/
 	}
 }
 

@@ -18,10 +18,7 @@ void *writer(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	int i = 0;
 	while (1) {
-	 	// sync();
-
 	 	pwrite(*fd, buf[i], SIZE, 0);
-//		fprintf(stderr, "W: %c\n", buf[i][0]);
  		i = (i + 1) % 2;
 
 	} 
@@ -31,13 +28,7 @@ void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	while(1) {
 		char readbuf[SIZE + 1];
-
-		sync();
-
   		pread(*fd, readbuf, SIZE, 0);
-
-//		fprintf(stderr, "R: %c\n", readbuf[0]);
-
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {
 			fprintf(stderr, "%s\n", readbuf);
 		}		

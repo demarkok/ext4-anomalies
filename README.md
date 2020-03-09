@@ -17,7 +17,7 @@ The first thread (the writer) alternatingly writes `xxxxxx` and `yyyyyy` into th
 ```python
 i = 0
 while True:
-  pwrite(file, buf[i], SIZE, 0)
+  pwrite(file, buf[i], 6, 0)
   i = (i + 1) % 2
 ```
 
@@ -25,7 +25,7 @@ The second thread (the reader) reads from the file and reports a problem in case
 ```python
 while True:
   rbuf = ...
-  pread(file, rbuf, SIZE, 0)
+  pread(file, rbuf, 6, 0)
   if rbuf != buf[0] and rbuf != buf[1]:
     ANOMALY_FOUND!
 ```

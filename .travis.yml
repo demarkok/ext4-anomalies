@@ -4,6 +4,6 @@ compiler: gcc
 
 install: make
 
-script: ./isatomic
+script: timeout 15s ./isatomic
 
 after_success: make clean

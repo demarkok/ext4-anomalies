@@ -5,4 +5,4 @@ isatomic: $(SRC)
 	gcc -pthread -O0 -o isatomic $(SRC)
 
 clean: 
-	rm test.txt isatomic
+	rm -f test.txt isatomic

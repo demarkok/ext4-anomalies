@@ -10,9 +10,6 @@
 // buf size
 const int SIZE = 47;
 
-// number of read/write iterations
-const int N = 3000;
-
 char buf[][SIZE + 1] = {
 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",

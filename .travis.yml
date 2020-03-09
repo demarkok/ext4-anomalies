@@ -1,0 +1,9 @@
+os: linux
+install: make
+compiler: gcc
+
+install: make
+
+script: ./isatomic
+
+after_success: make clean

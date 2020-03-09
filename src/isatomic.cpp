@@ -9,7 +9,9 @@
 
 // buf size
 const int SIZE = 47;
-const int N = 5e6;
+
+// number of read/write iterations
+const int N = 3000;
 
 char buf[][SIZE + 1] = {
 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -20,7 +22,7 @@ char buf[][SIZE + 1] = {
 void *writer(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	int i = 0;
-	for (int j = 0; j < N; j++) {
+	while (1) {
 	 	pwrite(*fd, buf[i], SIZE, 0);
 		i = (i + 1) % 2;
 
@@ -29,9 +31,10 @@ void *writer(void *fd_ptr) {
 
 void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
-	for (int j = 0; j < N; j++) {
+	while (1) {
 		char readbuf[SIZE + 1];
   		pread(*fd, readbuf, SIZE, 0);
+
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {
 			fprintf(stderr, "%s\n", readbuf);
 			exit(0);
@@ -56,5 +59,5 @@ int main() {
 
 	close(fd);
 
-	return 1;
+	return 0;
 }

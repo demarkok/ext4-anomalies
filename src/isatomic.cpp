@@ -18,7 +18,9 @@ char buf[][SIZE + 1] = {
 "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
 };
 
-
+/*
+	The first thread alternatingly writes buf[0] and buf[1] into the file.
+*/
 void *writer(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	int i = 0;
@@ -29,17 +31,20 @@ void *writer(void *fd_ptr) {
 	} 
 }
 
+/*
+	The second thread reads the file and stops if its content
+	is anomalous (different from buf[0] and buf[1]).
+*/
 void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	while (1) {
 		char readbuf[SIZE + 1];
   		pread(*fd, readbuf, SIZE, 0);
-/*
+
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {
 			fprintf(stderr, "%s\n", readbuf);
 			exit(0);
 		}		
-*/
 	}
 }
 

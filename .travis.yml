@@ -6,4 +6,4 @@ install: make
 
 script: timeout 15s ./isatomic
 
-after_success: make clean
+after_script: make clean

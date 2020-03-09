@@ -4,9 +4,12 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
+// buf size
 const int SIZE = 47;
+const int N = 5e6;
 
 char buf[][SIZE + 1] = {
 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -17,20 +20,21 @@ char buf[][SIZE + 1] = {
 void *writer(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	int i = 0;
-	while (1) {
+	for (int j = 0; j < N; j++) {
 	 	pwrite(*fd, buf[i], SIZE, 0);
- 		i = (i + 1) % 2;
+		i = (i + 1) % 2;
 
 	} 
 }
 
 void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
-	while(1) {
+	for (int j = 0; j < N; j++) {
 		char readbuf[SIZE + 1];
   		pread(*fd, readbuf, SIZE, 0);
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {
 			fprintf(stderr, "%s\n", readbuf);
+			exit(0);
 		}		
 	}
 }
@@ -52,5 +56,5 @@ int main() {
 
 	close(fd);
 
-	return 0;
+	return 1;
 }

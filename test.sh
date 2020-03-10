@@ -7,6 +7,7 @@ TESTS=("na_pwrite" "na_write")
 exit_code=0
 
 for test in ${TESTS[*]}; do
+	rm -f test.txt
 	echo "Test $test..."
 	timeout --foreground $TIMEOUT $DIR"/"$test
 

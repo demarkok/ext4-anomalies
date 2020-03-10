@@ -60,10 +60,10 @@ fd2 = open("file.txt", ...)
 while True:
   pwrite(fd1, buf[0], 6, 0)
   lseek(fd1, 0, SEEK_SET)
-	lseek(fd2, 0, SEEK_SET)
+  lseek(fd2, 0, SEEK_SET)
   RUN_WRITER_THREAD()
   RUN_READER_THREAD()
-  JOIN
+  JOIN()
 ```
 The writer writes `yyyyy` to the file via `fd1`:
 

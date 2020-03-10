@@ -44,7 +44,7 @@ According to Posix, the second thread can read either `xxxxxx` or `yyyyyy` but i
 **(see `src/na_pwrite.cpp`)**
 
 ## Anomaly #2: non-atomic `write`
-According to [POSIX.1-2017 (section 2.9.7)](https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_09_07), `write` and `read` system calls also should be atomic. And they are, until they access the same regular file via different [`file`](https://elixir.bootlin.com/linux/v5.5.7/source/include/linux/fs.h#L935) structures (e.g. when the file descriptors are aquired in two different `open` calls). That's because `write` and `read` calls [aquire `file->f_pos_lock`](https://elixir.bootlin.com/linux/v5.5.7/source/fs/file.c#L801). This feature was added in Linux v3.14 to guarantee atomicity w.r.t. file offset (`f_pos`) accesses, since `write` and `read` change it (see [Linus Torvalds' email](https://lkml.org/lkml/2014/3/3/533)).
+According to [POSIX.1-2017 (section 2.9.7)](https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_09_07), `write` and `read` system calls also should be atomic. And they are, until they access the same regular file via different [`file`](https://elixir.bootlin.com/linux/v5.5.7/source/include/linux/fs.h#L935) structures (e.g. when the file descriptors are aquired in two different `open` calls). That's because `write` and `read` [aquire `file->f_pos_lock`](https://elixir.bootlin.com/linux/v5.5.7/source/fs/file.c#L801). This feature was added in Linux v3.14 to guarantee atomicity w.r.t. file offset (`f_pos`) accesses, since `write` and `read` change it (see [Linus Torvalds' email](https://lkml.org/lkml/2014/3/3/533)).
 
 The following two-threaded program exhibits non-atomic reads.
 

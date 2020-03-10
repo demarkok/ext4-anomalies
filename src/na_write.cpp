@@ -17,13 +17,13 @@ char buf[][SIZE + 1] = {
 const char FILENAME[] = "file.txt";
 
 void *writer(void *fd_ptr) {
-	int *fd = (int *)fd_ptr;	
+	int *fd = (int *)fd_ptr;
 	write(*fd, buf[1], SIZE);
 }
 
 void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
-	char readbuf[SIZE + 1];
+	char readbuf[SIZE + 1] = {0};
 
   	read(*fd, readbuf, SIZE);
 	if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {

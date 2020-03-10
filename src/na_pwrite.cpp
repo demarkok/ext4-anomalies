@@ -38,7 +38,7 @@ void *writer(void *fd_ptr) {
 void *reader(void *fd_ptr) {
 	int *fd = (int *)fd_ptr;
 	while (1) {
-		char readbuf[SIZE + 1];
+		char readbuf[SIZE + 1] = {0};
   		pread(*fd, readbuf, SIZE, 0);
 
 		if (strcmp(readbuf, buf[0]) && strcmp(readbuf, buf[1])) {

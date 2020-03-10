@@ -1,8 +1,13 @@
-SRC = src/isatomic.cpp
-CC = gcc
+CC = g++
+CFLAGS = -pthread -O0
 
-isatomic: $(SRC)
-	gcc -pthread -O0 -o isatomic $(SRC)
+SRC = src
+TARGETS = na_pwrite na_write
+
+all: $(TARGETS)
+
+$(TARGETS): %: $(SRC)/%.cpp
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean: 
-	rm -f test.txt isatomic
+	rm -f file.txt $(TARGETS)

@@ -8,12 +8,15 @@
 #include <string.h>
 
 // buf size
-const int SIZE = 47;
+const int SIZE = 6;
 
-char buf[][SIZE + 1] = {
-"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+const char buf[][SIZE + 1] = {
+"xxxxxx",
+"yyyyyy"
 };
+
+const char FILENAME[] = "file.txt";
+
 
 /*
 	The first thread alternatingly writes buf[0] and buf[1] into the file.
@@ -47,7 +50,7 @@ void *reader(void *fd_ptr) {
 
 
 int main() {
-	int fd = open("test.txt", O_CREAT | O_RDWR | O_TRUNC | O_SYNC); // weak reads even with O_SYNC
+	int fd = open(FILENAME, O_CREAT | O_RDWR | O_TRUNC | O_SYNC); // weak reads even with O_SYNC
 
 	write(fd, buf[0], SIZE);
 

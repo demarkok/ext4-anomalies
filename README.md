@@ -15,7 +15,7 @@ make
 
 ## Anomaly #1: non-atomic `pwrite`
 According to [POSIX.1-2017 (section 2.9.7)](https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_09_07), 
-`pwrite` and `pread` system calls should be atomic (i.e. *each call shall either see all of the specified effects of the other call, or none of them*). But the following two-threaded program (taken from [StackOverflow](https://stackoverflow.com/questions/35595685/write2-read2-atomicity-between-processes-in-linux)) exhibit non-atomic behaviors (see `src/isatomic.cpp`)
+`pwrite` and `pread` system calls should be atomic (i.e. *each call shall either see all of the specified effects of the other call, or none of them*). But the following two-threaded program (taken from [StackOverflow](https://stackoverflow.com/questions/35595685/write2-read2-atomicity-between-processes-in-linux)) exhibit non-atomic behaviors (see `src/na_pwrite.cpp`)
 
 Suppose that `buf = ["xxxxxx", "yyyyyy"]` and `file`  is a file descriptor
 

@@ -48,29 +48,28 @@ According to [POSIX.1-2017 (section 2.9.7)](https://pubs.opengroup.org/onlinepub
 
 The following two-threaded program exhibits non-atomic reads.
 
-Suppose that the main thread opens the same file twice and aquire two descriptors `fd1` and `fd2`, then it initialize the file with `xxxxx`, resets the offsets to 0 and runs the *writer* and the *reader* threads in parallel:
+Suppose that the main thread opens the same file twice and aquire two descriptors `fd1` and `fd2`, then it initialize the file with `xxxxxx`, resets the offsets to 0 and runs the *writer* and the *reader* threads in parallel:
 
 ```python
 # MAIN THREAD
 
-buf = ["xxxxx", "yyyyy"]
 fd1 = open("file.txt", ...)
 fd2 = open("file.txt", ...)
 
 while True:
-  pwrite(fd1, buf[0], 6, 0)
+  pwrite(fd1, "xxxxxx", 6, 0)
   lseek(fd1, 0, SEEK_SET)
   lseek(fd2, 0, SEEK_SET)
   RUN_WRITER_THREAD()
   RUN_READER_THREAD()
   JOIN()
 ```
-The writer writes `yyyyy` to the file via `fd1`:
+The writer writes `yyyyyy` to the file via `fd1`:
 
 ```python
 # THREAD 1 (WRITER)
 
-write(fd1, buf[1], 5)
+write(fd1, "yyyyyy", 6)
 ```
 
 The reader reads from the file via `fd2` and reports a problem in case of reading an intermediate value:
@@ -78,9 +77,9 @@ The reader reads from the file via `fd2` and reports a problem in case of readin
 # THREAD 2 (READER)
 
 rbuf = ...
-read(fd2, rbuf, 5)
+read(fd2, rbuf, 6)
 
-if rbuf != buf[0] and rbuf != buf[1]:
+if rbuf != "xxxxxx" and rbuf != "yyyyyy":
     ANOMALY_FOUND!
 ```
 
